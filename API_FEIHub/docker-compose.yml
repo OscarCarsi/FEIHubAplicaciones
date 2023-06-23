@@ -1,0 +1,26 @@
+version: '3'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=feihub_users
+      - MYSQL_USER=FEIHub_Admin
+      - MYSQL_PASSWORD=4dm1n1str4d0r_F31Hub
+    ports:
+      - 127.0.0.1:3306:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./feihub_users.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  mysql-data:

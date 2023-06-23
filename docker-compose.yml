@@ -1,0 +1,68 @@
+version: '3'
+services:
+  api_gateway:
+    build:
+      context: ./APIGateway_FEIHub
+      dockerfile: Dockerfile
+    ports:
+      - 8083:8083
+    depends_on:
+      - apiusers
+      - apiposts
+
+  apiusers:
+    build:
+      context: ./API_FEIHub
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=feihub_users
+      - MYSQL_USER=FEIHub_Admin
+      - MYSQL_PASSWORD=4dm1n1str4d0r_F31Hub
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./API_FEIHub/feihub_users.sql:/docker-entrypoint-initdb.d/init.sql
+
+  apiposts:
+    build:
+      context: ./APIPosts_FEIHub
+      dockerfile: Dockerfile
+    ports:
+      - 8082:8082
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27018:27017
+    volumes:
+      - mongodb-data:/data/db
+
+  init-mongo:
+    image: mongo:latest
+    command: mongo --host mongodb --port 27017 --eval 'db.getSiblingDB("feihub_posts").createCollection("posts"); db.getSiblingDB("feihub_posts").createCollection("chats")'
+    depends_on:
+      - mongodb
+
+  web_app:
+    build:
+      context: ./FEIHub_Web
+      dockerfile: Dockerfile
+    ports:
+      - 5145:80
+    depends_on:
+      - api_gateway
+
+volumes:
+  mongodb-data:
+  mysql-data:

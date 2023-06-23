@@ -1,0 +1,24 @@
+{
+  "development": {
+    "username": "FEIHub_Admin",
+    "password": "4dm1n1str4d0r_F31Hub",
+    "database": "feihub_users",
+    "host": "feihub_aplicaciones-mysql-1",  
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "FEIHub_Admin",
+    "password": "4dm1n1str4d0r_F31Hub",
+    "database": "feihub_users",
+    "host": "feihub_aplicaciones-mysql-1",  
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "FEIHub_Admin",
+    "password": "4dm1n1str4d0r_F31Hub",
+    "database": "feihub_users",
+    "host": "feihub_aplicaciones-mysql-1",  
+    "dialect": "mysql"
+  }
+}
+

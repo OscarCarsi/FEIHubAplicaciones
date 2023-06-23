@@ -1,0 +1,32 @@
+{
+  "development": {
+    "database": {
+      "url": "mongodb://feihub_aplicaciones-mongodb-1:27017/feihub_posts",
+      "serverSelectionTimeoutMS": 30000,
+      "options": {
+        "useNewUrlParser": true
+      }
+    }
+  },
+  "test": {
+    "database": {
+      "url": "mongodb://feihub_aplicaciones-mongodb-1:27017/feihub_posts?directConnection=true&serverSelectionTimeoutMS=20&appName=mongosh+1.8.0",
+      "options": {
+        "useNewUrlParser": true
+      }
+    }
+  },
+  "production": {
+    "database": {
+      "protocol": "mongodb",
+      "username": "FEIHub_Admin",
+      "password": "4dm1n1str4d0r_F31Hub",
+      "name": "feihub_posts",
+      "host": "feihub_aplicaciones-mongodb-1",
+      "port": "27017",
+      "options": {
+        "useNewUrlParser": true
+      }
+    }
+  }
+}

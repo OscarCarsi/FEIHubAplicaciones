@@ -1,0 +1,256 @@
+@page
+@model FEIHub_Web.Pages.SingInModel;
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.111.3">
+    <title>Signin Template · Bootstrap v5.3</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CursosUI.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+    <meta name="theme-color" content="#712cf9">
+    <style>
+        #studentForm {
+            max-height: 700px;
+        }
+
+        #academicForm {
+            max-height: 700px;
+            display: none;
+        }
+        .btn-custom {
+            background-color: #14a3c8; /
+            color: #000000; 
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .alert-fade {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .alert-hide {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .custom-label {
+            background-color: #063970;
+            color : white;
+        }
+    </style>
+    <script>
+        function togglePasswordVisibilityStudent() {
+            var passwordInput = document.getElementById("studentPassword");
+            var passwordToggleIcon = document.getElementById("passwordToggleIconStudent");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                passwordToggleIcon.classList.remove("fa-eye");
+                passwordToggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                passwordToggleIcon.classList.remove("fa-eye-slash");
+                passwordToggleIcon.classList.add("fa-eye");
+            }
+        }
+        function togglePasswordVisibilityAcademic() {
+            var passwordInput = document.getElementById("academicPassword");
+            var passwordToggleIcon = document.getElementById("passwordToggleIconAcademic");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                passwordToggleIcon.classList.remove("fa-eye");
+                passwordToggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                passwordToggleIcon.classList.remove("fa-eye-slash");
+                passwordToggleIcon.classList.add("fa-eye");
+            }
+        }
+        var activeButton = "ACADEMIC";
+
+        function toggleRegisterForm() {
+        var studentForm = document.getElementById("studentForm");
+        var academicForm = document.getElementById("academicForm");
+        var studentButton = document.getElementById("studentButton");
+        var academicButton = document.getElementById("academicButton");
+
+        if (studentButton.classList.contains("active")) {
+            studentForm.style.display = "none";
+            academicForm.style.display = "block";
+            academicButton.classList.add("active");
+            studentButton.classList.remove("active");
+            studentButton.disabled = false;
+            academicButton.disabled = true;
+            activeButton = "ACADEMIC";
+            var param1Input = document.getElementById("activeButton");
+            param1Input.value = activeButton;
+        } else {
+            studentForm.style.display = "block";
+            academicForm.style.display = "none";
+            studentButton.classList.add("active");
+            academicButton.classList.remove("active");
+            studentButton.disabled = true;
+            academicButton.disabled = false;
+            activeButton = "STUDENT";
+            var param1Input = document.getElementById("activeButton");
+            param1Input.value = activeButton;
+        }
+        }
+    </script>
+</head>
+<body style="margin-top: 80px">
+    <main class="container">
+        <form class="row justify-content-end" asp-page-handler="Singin" method="POST" asp-page="./Singin">
+            <div class="col-md-6">
+                <input type="text" name="activeButton" id="activeButton" value="STUDENT" hidden />
+                <img class="img-fluid" src="/Resources/FEIHub_Logo.png" style="height: 1000px; width: 40%; position: absolute; top: 0; left: 0;" />
+            </div>
+            <div class="col-lg-6 align-self-end">
+                <p class="text-center custom-label" style="font-size: 25px; margin-top: -80px;margin-right: -90px;">Universidad Veracruzana</p>
+                <h1 class="text-center" style="margin-top: 50px; margin-bottom: 10px;">Bienvenido a FEIHub</h1>
+                <p class="text-center" style="font-size: 14px; margin-top: 10px;">Crea tu cuenta como estudiante o como académico para comenzar a usar FEIHub</p>
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <button id="studentButton" disabled type="button" style=" margin-bottom: 10px; margin-right: 50%;float: start;" class="w-100 btn btn-lg btn-custom active" onclick="toggleRegisterForm()">Estudiante</button>
+                    </div>
+                    <div class="col-4">
+                        <button id="academicButton" type="button" class="w-100 btn btn-lg btn-custom"onclick="toggleRegisterForm()">Académico</button>
+                    </div>
+                </div>
+                
+
+                <div id="studentForm">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="studentName" class="form-control" id="studentFirstName" placeholder="Nombre">
+                                <label for="studentFirstName">Nombre</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="studentPaternalSurname" class="form-control" id="studentLastName" placeholder="Apellido Paterno">
+                                <label for="studentLastName">Apellido Paterno</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="studentMaternalSurname" class="form-control" id="studentMiddleName" placeholder="Apellido Materno">
+                        <label for="studentMiddleName">Apellido Materno</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="studentSchoolId" class="form-control" id="studentMatricula" placeholder="S20000000">
+                        <label for="studentMatricula">Ejemplo: S20000000</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select name="studentEducationalProgram" class="form-select" id="studentProgram">
+                            <option value="Estadística">Estadística</option>
+                            <option value="Ingeniería en Sistemas y Tecnologías de la Información">Ingeniería en Sistemas y Tecnologías de la Información</option>
+                            <option value="Ingeniería de Software">Ingeniería de Software</option>
+                            <option value="Ingeniería en Ciberseguridad e Infraestructura de Cómputo">Ingeniería en Ciberseguridad e Infraestructura de Cómputo</option>
+                            <option value="Redes y Servicios de Cómputo">Redes y Servicios de Cómputo</option>
+                            <option value="Tecnologías Computacionales">Tecnologías Computacionales</option>
+                        </select>
+                        <label for="studentProgram">Programa Educativo</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="studentUsername" class="form-control" id="studentUsername" placeholder="Nombre de Usuario">
+                        <label for="studentUsername">Nombre de Usuario</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="studentPassword" class="form-control" id="studentPassword" placeholder="Contraseña">
+                        <label for="studentPassword">Contraseña</label>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibilityStudent()">
+                            <i id="passwordToggleIconStudent" class="fa fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="academicForm">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="academicName" class="form-control" id="academicFirstName" placeholder="Nombre">
+                                <label for="academicFirstName">Nombre</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="academicPaternalSurname" class="form-control" id="academicLastName" placeholder="Apellido Paterno">
+                                <label for="academicLastName">Apellido Paterno</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="academicMaternalSurname" class="form-control" id="academicMiddleName" placeholder="Apellido Materno">
+                        <label for="academicMiddleName">Apellido Materno</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="academicEmail" class="form-control" id="academicEmail" placeholder="correo@uv.mx">
+                        <label for="academicEmail">Correo institucional</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="academicUsername" class="form-control" id="academicUsername" placeholder="Nombre de Usuario">
+                        <label for="academicUsername">Nombre de Usuario</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="academicPassword" class="form-control" id="academicPassword" placeholder="Contraseña">
+                        <label for="academicPassword">Contraseña</label>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibilityAcademic()">
+                                <i id="passwordToggleIconAcademic" class="fa fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                 <div class="d-grid">
+                    <button class="w-100 btn btn-lg btn-primary btn-custom" type="submit">Crear cuenta</button>
+                    <label class="text-center" style="font-size: 14px; margin-top: 20px;">¿Ya tienes cuenta? <a asp-page="LogIn">Iniciar sesión</a></label>
+                    @if (Model.Message == "No puedes dejar campos vacíos" || Model.Message == "No se pudo crear tu usuario, inténtalo más tarde" || Model.Message == "No se pudieron crear tus credenciales, inténtalo más tarde"){
+                        <div id="alertMessage" class="alert alert-danger alert-fade" role="alert">@Model.Message</div>
+                        <script>
+                            setTimeout(function() {
+                                var alertMessage = document.getElementById("alertMessage");
+                                alertMessage.classList.add("alert-hide");
+                            }, 2000); 
+                        </script>
+                    }
+                    @if (Model.Message =="Nombre de usuario en uso, ingresa otro nombre de usuario" || Model.Message == "Ya tienes una cuenta en este sistema, ve al inicio de sesión e ingresa tus credenciales de acceso" || Model.Message == "Verifica los datos proporcionados")
+                    {
+                        <div id="sucessMessage" class="alert alert-warning mt-3 alert-fade">@Model.Message</div>
+                        <script>
+                            setTimeout(function() {
+                                var alertMessage = document.getElementById("sucessMessage");
+                                alertMessage.classList.add("alert-hide");
+                            }, 2000); 
+                        </script>
+                    }
+                    @if (Model.Message == "Usuario creado exitosamente, inicia sesión para ingresar")
+                    {
+                        <div id="sucessMessage" class="alert alert-success mt-3 alert-fade">@Model.Message</div>
+                        <script>
+                            setTimeout(function() {
+                                var alertMessage = document.getElementById("sucessMessage");
+                                alertMessage.classList.add("alert-hide");
+                            }, 2000); 
+                        </script>
+                    }
+                </div>
+               
+            </div>
+        </form>
+    </main>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
